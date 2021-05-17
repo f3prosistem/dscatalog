@@ -1,14 +1,14 @@
 package com.f3pro.dscatolog.services;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,9 +27,9 @@ public class CategoryService {
 	// listar todas as categorias no banco de dado.
 
 	@Transactional(readOnly = true)
-	public List<CategoryDTO> findAll() {
-		List<Category> list = repository.findAll();
-		return list.stream().map(x -> new CategoryDTO(x)).collect(Collectors.toList());
+	public Page<CategoryDTO> findAllPaged(PageRequest pageRequest) {
+		Page<Category> list = repository.findAll(pageRequest);
+		return list.map(x -> new CategoryDTO(x));
 
 	}
 
@@ -65,12 +65,10 @@ public class CategoryService {
 		try {
 			repository.deleteById(id);
 
-		}
-		catch(EmptyResultDataAccessException e ) {
+		} catch (EmptyResultDataAccessException e) {
 			throw new ResourceNotFoundExeption("Não encontrado Id: " + id);
-			
-		}
-		catch(DataIntegrityViolationException e) {
+
+		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseExeption("Violação de integridade");
 		}
 	}
