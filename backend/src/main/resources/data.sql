@@ -54,3 +54,28 @@ INSERT INTO tb_product_category (product_id, category_id) VALUES (22, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (23, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (24, 3);
 INSERT INTO tb_product_category (product_id, category_id) VALUES (25, 3);
+
+
+
+INSERT INTO tb_client(name, cpf, income, bith_date,children) VALUES('João Pedro ', '86487273830', 45000,TIMESTAMP WITH TIME ZONE '2021-03-14T10:00:00Z', 1);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('Paulo Ricardo', '79088872791', 3250.5,TIMESTAMP WITH TIME ZONE '2020-05-14T10:00:00Z', 2);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('Antonio Silva ', '63350484000', 4821.7,TIMESTAMP WITH TIME ZONE '2021-01-14T10:00:00Z', 3);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('Francisco Souza ', '28236435083', 60000,TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 1);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('João Pedro', '31783248440', 8521.4,TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 5);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('Maria Cristina', '81326714309', 1800.5,TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 4);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('Maria Luisa', '57004776298', 3253.15,TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 2);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('Francivaldo Alves', '88762141783', 12000,TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 1);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('Livia Cristina', '71660854369', 45000,TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 2);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('Raquel Pereira', '21518636110', 32000,TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 1);
+INSERT INTO tb_client(name, cpf, income, bith_date, children) VALUES('Andressa ds Silva', '76587442803', 4821.5,TIMESTAMP WITH TIME ZONE '2020-07-14T10:00:00Z', 3);
+
+
+
+
+
+
+
+
+
+
+
