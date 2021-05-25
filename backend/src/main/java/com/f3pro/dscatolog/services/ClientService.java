@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +25,8 @@ public class ClientService {
 	private ClientRepository repository;
 
 	@Transactional(readOnly = true)
-	public Page<ClientDTO> findAllPaged(PageRequest pageRequest) {
-		Page<Client> list = repository.findAll(pageRequest);
+	public Page<ClientDTO> findAllPaged(Pageable pageable) {
+		Page<Client> list = repository.findAll(pageable);
 		return list.map(x -> new ClientDTO(x));
 
 	}
@@ -42,13 +42,11 @@ public class ClientService {
 	@Transactional
 	public ClientDTO insert(ClientDTO dto) {
 
-		
-			Client entity = new Client();
-			copyDtoToEntity(dto, entity);
-			entity = repository.save(entity);
-			return new ClientDTO(entity);
+		Client entity = new Client();
+		copyDtoToEntity(dto, entity);
+		entity = repository.save(entity);
+		return new ClientDTO(entity);
 
-		
 	}
 
 	@Transactional
@@ -60,8 +58,7 @@ public class ClientService {
 			return new ClientDTO(entity);
 		} catch (EntityNotFoundException e) {
 			throw new ResourceNotFoundExeption("Não encontrado Id: " + id);
-			
-		
+
 		}
 	}
 
