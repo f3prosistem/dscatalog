@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import com.f3pro.dscatolog.dto.ProductDTO;
 import com.f3pro.dscatolog.services.ProductService;
 import com.f3pro.dscatolog.services.exceptions.DatabaseExeption;
-import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundExeption;
+import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundException;
 import com.f3pro.dscatolog.tests.Factory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -61,13 +61,13 @@ public class ProductResourceTests {
 		Mockito.when(service.findAllPaged(any())).thenReturn(page);
 
 		Mockito.when(service.findById(existingId)).thenReturn(productDTO);
-		Mockito.when(service.findById(nonExistingId)).thenThrow(ResourceNotFoundExeption.class);
+		Mockito.when(service.findById(nonExistingId)).thenThrow(ResourceNotFoundException.class);
 
 		Mockito.when(service.update(eq(existingId), any())).thenReturn(productDTO);
-		Mockito.when(service.update(eq(nonExistingId), any())).thenThrow(ResourceNotFoundExeption.class);
+		Mockito.when(service.update(eq(nonExistingId), any())).thenThrow(ResourceNotFoundException.class);
 
 		doNothing().when(service).delete(existingId);
-		doThrow(ResourceNotFoundExeption.class).when(service).delete(nonExistingId);
+		doThrow(ResourceNotFoundException.class).when(service).delete(nonExistingId);
 		doThrow(DatabaseExeption.class).when(service).delete(depedentId);
 
 		Mockito.when(service.insert(any())).thenReturn(productDTO);

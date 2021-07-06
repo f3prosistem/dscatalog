@@ -16,7 +16,7 @@ import com.f3pro.dscatolog.dto.ClientDTO;
 import com.f3pro.dscatolog.entities.Client;
 import com.f3pro.dscatolog.repositories.ClientRepository;
 import com.f3pro.dscatolog.services.exceptions.DatabaseExeption;
-import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundExeption;
+import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClientService {
@@ -35,7 +35,7 @@ public class ClientService {
 	public ClientDTO findById(Long id) {
 
 		Optional<Client> obj = repository.findById(id);
-		Client entity = obj.orElseThrow(() -> new ResourceNotFoundExeption("Objeto não encontrado "));
+		Client entity = obj.orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado "));
 		return new ClientDTO(entity);
 	}
 
@@ -57,7 +57,7 @@ public class ClientService {
 			entity = repository.save(entity);
 			return new ClientDTO(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundExeption("Não encontrado Id: " + id);
+			throw new ResourceNotFoundException("Não encontrado Id: " + id);
 
 		}
 	}
@@ -67,7 +67,7 @@ public class ClientService {
 			repository.deleteById(id);
 
 		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundExeption("Não encontrado Id: " + id);
+			throw new ResourceNotFoundException("Não encontrado Id: " + id);
 
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseExeption("Violação de integridade");

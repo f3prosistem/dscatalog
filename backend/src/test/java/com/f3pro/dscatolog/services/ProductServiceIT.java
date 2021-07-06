@@ -13,7 +13,7 @@ import org.springframework.data.domain.Sort;
 
 import com.f3pro.dscatolog.dto.ProductDTO;
 import com.f3pro.dscatolog.repositories.ProductRepository;
-import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundExeption;
+import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundException;
 
 @SpringBootTest
 @Transactional
@@ -45,7 +45,7 @@ public class ProductServiceIT {
 
 	@Test
 	public void deleteShouldThrowEmptyResourceNotFoundExeptionIdDoesExists() {
-		Assertions.assertThrows(ResourceNotFoundExeption.class, () -> {
+		Assertions.assertThrows(ResourceNotFoundException.class, () -> {
 			service.delete(nonExistingId);
 		});
 

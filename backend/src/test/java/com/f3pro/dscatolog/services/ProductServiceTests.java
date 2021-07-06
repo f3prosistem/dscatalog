@@ -27,7 +27,7 @@ import com.f3pro.dscatolog.entities.Product;
 import com.f3pro.dscatolog.repositories.CategoryRepository;
 import com.f3pro.dscatolog.repositories.ProductRepository;
 import com.f3pro.dscatolog.services.exceptions.DatabaseExeption;
-import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundExeption;
+import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundException;
 import com.f3pro.dscatolog.tests.Factory;
 
 @ExtendWith(SpringExtension.class)
@@ -92,7 +92,7 @@ public class ProductServiceTests {
 
     @Test
     public void updateShouldThrowResourceNotFoundExceptionWhenIdDoesExists() {
-        Assertions.assertThrows(ResourceNotFoundExeption.class, () -> {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             service.update(nonExistingId, productDTO);
         });
     }
@@ -101,7 +101,7 @@ public class ProductServiceTests {
     @Test
     public void findByIdShouldThrowResourceNotFoundExceptionWhenIdDoesExists() {
 
-        Assertions.assertThrows(ResourceNotFoundExeption.class, () -> {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             service.findById(nonExistingId);
         });
 
@@ -133,7 +133,7 @@ public class ProductServiceTests {
 
     @Test
     public void deleteShouldThrowEmptyResourceNotFoundExeptionIdDoesExists() {
-        Assertions.assertThrows(ResourceNotFoundExeption.class, () -> {
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> {
             service.delete(nonExistingId);
         });
         Mockito.verify(repository, Mockito.times(1)).deleteById(nonExistingId);

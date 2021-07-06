@@ -19,7 +19,7 @@ import com.f3pro.dscatolog.entities.Product;
 import com.f3pro.dscatolog.repositories.CategoryRepository;
 import com.f3pro.dscatolog.repositories.ProductRepository;
 import com.f3pro.dscatolog.services.exceptions.DatabaseExeption;
-import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundExeption;
+import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class ProductService {
@@ -43,7 +43,7 @@ public class ProductService {
 	public ProductDTO findById(Long id) {
 
 		Optional<Product> obj = repository.findById(id);
-		Product entity = obj.orElseThrow(() -> new ResourceNotFoundExeption("Objeto não encontrado "));
+		Product entity = obj.orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado "));
 		return new ProductDTO(entity, entity.getCategories());
 	}
 
@@ -63,7 +63,7 @@ public class ProductService {
 			entity = repository.save(entity);
 			return new ProductDTO(entity);
 		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundExeption("Não encontrado Id: " + id);
+			throw new ResourceNotFoundException("Não encontrado Id: " + id);
 		}
 	}
 
@@ -72,7 +72,7 @@ public class ProductService {
 			repository.deleteById(id);
 
 		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundExeption("Não encontrado Id: " + id);
+			throw new ResourceNotFoundException("Não encontrado Id: " + id);
 
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseExeption("Violação de integridade");

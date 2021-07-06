@@ -16,12 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 import com.f3pro.dscatolog.dto.RoleDTO;
 import com.f3pro.dscatolog.dto.UserDTO;
 import com.f3pro.dscatolog.dto.UserInsertDTO;
+import com.f3pro.dscatolog.dto.UserUpdateDTO;
 import com.f3pro.dscatolog.entities.Role;
 import com.f3pro.dscatolog.entities.User;
 import com.f3pro.dscatolog.repositories.RoleRepository;
 import com.f3pro.dscatolog.repositories.UserRepository;
 import com.f3pro.dscatolog.services.exceptions.DatabaseExeption;
-import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundExeption;
+import com.f3pro.dscatolog.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class UserService {
@@ -35,8 +36,6 @@ public class UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 
-	// listar todas as categorias no banco de dado.
-
 	@Transactional(readOnly = true)
 	public Page<UserDTO> findAllPaged(Pageable pageable) {
 		Page<User> list = repository.findAll(pageable);
@@ -48,7 +47,7 @@ public class UserService {
 	public UserDTO findById(Long id) {
 
 		Optional<User> obj = repository.findById(id);
-		User entity = obj.orElseThrow(() -> new ResourceNotFoundExeption("Objeto não encontrado "));
+		User entity = obj.orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado "));
 		return new UserDTO(entity);
 	}
 
@@ -61,25 +60,26 @@ public class UserService {
 		return new UserDTO(entity);
 	}
 
+
 	@Transactional
-	public UserDTO update(Long id, UserInsertDTO dto) {
+	public UserDTO update(Long id, UserUpdateDTO dto) {
 		try {
 			User entity = repository.getOne(id);
 			copyDtoToEntity(dto, entity);
 			entity = repository.save(entity);
-			entity.setPassword(passwordEncoder.encode(dto.getPassword()));
 			return new UserDTO(entity);
-		} catch (EntityNotFoundException e) {
-			throw new ResourceNotFoundExeption("Não encontrado Id: " + id);
 		}
+		catch (EntityNotFoundException e) {
+			throw new ResourceNotFoundException("Id not found " + id);
+		}		
 	}
-
+	
 	public void delete(Long id) {
 		try {
 			repository.deleteById(id);
 
 		} catch (EmptyResultDataAccessException e) {
-			throw new ResourceNotFoundExeption("Não encontrado Id: " + id);
+			throw new ResourceNotFoundException("Não encontrado Id: " + id);
 
 		} catch (DataIntegrityViolationException e) {
 			throw new DatabaseExeption("Violação de integridade");
